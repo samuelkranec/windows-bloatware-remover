@@ -44,6 +44,12 @@ $apps = @(
     "*Pinterest*",
     "*News*",
     "*Weather*"
+    "*Microsoft.BingNews*",
+    "*Microsoft.BingWeather*",
+    "*Microsoft.BingSearch*",
+    "*Bing*",
+    "*Microsoft.Clipchamp*",
+    "*Clipchamp*"
 )
 
 $keepApps = @(
@@ -54,8 +60,7 @@ $keepApps = @(
     "*MicrosoftOfficeHub*",
     "*Outlook*",
     "*OneNote*",
-    "*Clipchamp*"
-)
+    )
 
 foreach ($app in $apps) {
 
