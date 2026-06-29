@@ -50,6 +50,11 @@ $apps = @(
     "*Bing*",
     "*Microsoft.Clipchamp*",
     "*Clipchamp*"
+    "*Copilot*",
+    "*Microsoft.Copilot*",
+    "*Windows.Copilot*",
+    "*Microsoft.DevHome*",
+    "*Windows.DevHome*"
 )
 
 $keepApps = @(
