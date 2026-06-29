@@ -54,7 +54,7 @@ $apps = @(
     "*Microsoft.Copilot*",
     "*Windows.Copilot*",
     "*Microsoft.DevHome*",
-    "*Windows.DevHome*",
+    "*Windows.DevHome*"
 )
 
 $keepApps = @(
@@ -64,7 +64,7 @@ $keepApps = @(
     "*Office*",
     "*MicrosoftOfficeHub*",
     "*Outlook*",
-    "*OneNote*",
+    "*OneNote*"
 )
 
 foreach ($app in $apps) {
