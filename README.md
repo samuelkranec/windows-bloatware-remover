@@ -77,6 +77,8 @@ Actual results depend on installed components.
 * Administrator privileges
 * PowerShell execution policy temporarily bypassed
 
+![PowerShell](https://img.shields.io/badge/PowerShell-5.1+-5391FE?logo=powershell)
+![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6?logo=windows)
 ---
 
 ## How to Use
