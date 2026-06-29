@@ -1,31 +1,46 @@
-# Windows Debloat Script
+# Windows Bloatware Remover
 
-A PowerShell-based debloating tool for Windows 10 and Windows 11 that removes preinstalled Microsoft Store applications while preserving selected core system and productivity apps.
+A PowerShell utility to remove preinstalled Windows 10/11 bloatware applications while preserving selected core productivity and system apps.
 
----
-
-## Overview
-
-This script is designed to streamline Windows installations by removing unwanted preinstalled applications (bloatware) for all users on the system. It focuses on Microsoft Store (Appx) applications and does not modify system files.
-
-It includes a whitelist mechanism to ensure essential productivity and system-related applications remain unaffected.
+This project helps clean fresh Windows installations by removing unnecessary preinstalled Microsoft Store (Appx) applications.
 
 ---
 
 ## Features
 
 * Removes preinstalled Windows Store (Appx) applications
-* Applies changes for all users on the system
-* Supports provisioned package cleanup (prevents reinstallation for new users)
+* Cleans system-wide app installations (all users)
+* Removes provisioned packages (prevents reinstall for new users)
 * Whitelist-based protection for essential applications
-* Simple and fully customizable PowerShell script
+* Fully customizable PowerShell script
 * No external dependencies required
 
 ---
 
-## Protected Applications
+## One-Click Run (GitHub Raw)
 
-The following applications are excluded from removal:
+Run the script directly from GitHub:
+
+```powershell id="9v2k3x"
+irm https://raw.githubusercontent.com/samuelkranec/windows-bloatware-remover/main/Remove-Bloatware.ps1 | iex
+```
+
+---
+
+## Safer Installation Method
+
+Download and run manually:
+
+```powershell id="2m8xq0"
+irm https://raw.githubusercontent.com/samuelkranec/windows-bloatware-remover/main/Remove-Bloatware.ps1 -OutFile debloat.ps1
+powershell -ExecutionPolicy Bypass -File debloat.ps1
+```
+
+---
+
+## Protected Applications (Not Removed)
+
+These applications are intentionally excluded from removal:
 
 * Xbox Game Overlay
 * Xbox Gaming Overlay
@@ -35,7 +50,7 @@ The following applications are excluded from removal:
 * OneNote
 * Clipchamp
 
-These applications are preserved intentionally to maintain productivity and gaming functionality.
+These apps are preserved for productivity and system functionality.
 
 ---
 
@@ -43,15 +58,16 @@ These applications are preserved intentionally to maintain productivity and gami
 
 The script targets common Windows bloatware, including:
 
-* Preinstalled promotional apps (e.g., Spotify, TikTok)
+* Preinstalled promotional apps (Spotify, TikTok, etc.)
 * Microsoft consumer apps (News, Weather, Get Help, Feedback Hub)
-* Legacy apps (Skype, Mixed Reality Portal)
-* Games and entertainment apps (Candy Crush, Solitaire, Xbox components)
-* Social media and third-party apps (Facebook, Instagram, Twitter, LinkedIn)
-* Streaming and shopping apps (Netflix, Disney+, Amazon-related apps)
-* OEM trialware and promotional software (McAfee trials, Dolby tools, etc.)
+* Legacy applications (Skype, Mixed Reality Portal)
+* Games (Candy Crush, Solitaire, Xbox components)
+* Social apps (Facebook, Instagram, Twitter, LinkedIn)
+* Streaming apps (Netflix, Disney+)
+* Shopping apps (Amazon-related apps, Temu, eBay, Booking if present)
+* OEM trialware and utilities (McAfee trials, Dolby tools, etc.)
 
-Actual removal depends on what is installed on the system.
+Actual results depend on installed components.
 
 ---
 
@@ -59,61 +75,63 @@ Actual removal depends on what is installed on the system.
 
 * Windows 10 or Windows 11
 * Administrator privileges
-* PowerShell execution enabled (temporary policy override recommended)
+* PowerShell execution policy temporarily bypassed
 
 ---
 
-## Usage
+## How to Use
 
-### 1. Run PowerShell as Administrator
+### Step 1 – Open PowerShell as Admin
 
-Open Start Menu → search PowerShell → right-click → Run as Administrator
+Search PowerShell → Right-click → Run as Administrator
 
-### 2. Allow script execution (temporary)
+### Step 2 – Allow script execution
 
-```powershell id="1a8q7k"
+```powershell id="g8k2lm"
 Set-ExecutionPolicy Bypass -Scope Process
 ```
 
-### 3. Execute the script
+### Step 3 – Run script
 
-```powershell id="8v2m1x"
-.\Remove-Bloatware.ps1
-```
+Use either one-click or manual method above.
 
 ---
 
 ## Post-Execution
 
-* A system restart is recommended after execution
-* Some applications may require reboot to fully disappear
+* Restart is recommended after execution
+* Some apps may require reboot to fully uninstall
 
 ---
 
 ## Customization
 
-The script can be customized by modifying the `$apps` array.
-
-You can:
+You can modify the `$apps` array inside the script to:
 
 * Add additional Appx package patterns
-* Remove unwanted targets from the list
-* Extend functionality using `winget` for Win32 applications
-* Implement logging or rollback functionality
+* Remove specific targets from removal list
+* Extend functionality with `winget` for Win32 apps
+* Add logging or restore features
 
 ---
 
 ## Limitations
 
 * Does not remove Win32 applications
-* Some Microsoft system apps are protected and cannot be removed
-* OEM preinstalled applications may not always be removable via Appx commands
-* Effectiveness depends on Windows version and installed components
+* Some system-protected apps cannot be removed
+* OEM apps may not always be uninstallable via Appx
+* Effectiveness depends on Windows version and installed packages
+
+---
+
+## Safety Notice
+
+This script modifies installed applications. Use at your own risk. Always review the script before execution.
 
 ---
 
 ## License
 
-This project is released under the MIT License.
+MIT License
 
-You are free to use, modify, and distribute this project with attribution.
+Free to use, modify, and distribute.
