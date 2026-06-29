@@ -64,7 +64,7 @@ $keepApps = @(
     "*Office*",
     "*MicrosoftOfficeHub*",
     "*Outlook*",
-    "*OneNote*",
+    "*OneNote*"
     )
 
 foreach ($app in $apps) {
