@@ -48,7 +48,6 @@ These applications are intentionally excluded from removal:
 * Microsoft Office / Office Hub
 * Outlook (Windows version)
 * OneNote
-* Clipchamp
 
 These apps are preserved for productivity and system functionality.
 
