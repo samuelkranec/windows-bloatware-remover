@@ -1,4 +1,4 @@
-# Run as Administrator
+#Requires -RunAsAdministrator
 
 $apps = @(
     "*Spotify*",
@@ -12,7 +12,7 @@ $apps = @(
     "*Microsoft.BingNews*",
     "*Microsoft.BingWeather*",
     "*Microsoft.GetHelp*",
-    "*Microsoft.Getstarted*",
+    "*Microsoft.GetStarted*",
     "*Microsoft.MicrosoftSolitaireCollection*",
     "*Microsoft.MixedReality.Portal*",
     "*Microsoft.SkypeApp*",
@@ -22,6 +22,12 @@ $apps = @(
     "*Microsoft.Todos*",
     "*Microsoft.PowerAutomateDesktop*",
     "*Microsoft.WindowsMaps*",
+    "*Microsoft.Clipchamp*",
+    "*Microsoft.DevHome*",
+    "*Microsoft.OutlookForWindows*",
+    "*Microsoft.549981C3F5F10*"    # Copilot
+    "*Copilot*",
+    "*Clipchamp*",
     "*Disney*",
     "*Netflix*",
     "*Facebook*",
@@ -36,61 +42,56 @@ $apps = @(
     "*Temu*",
     "*Booking*",
     "*eBay*",
-    "*AmazonShopping*",
     "*Adobe*",
     "*McAfee*",
-    "*Solitaire*",
     "*Duolingo*",
-    "*Pinterest*",
-    "*News*",
-    "*Weather*",
-    "*Microsoft.BingNews*",
-    "*Microsoft.BingWeather*",
-    "*Microsoft.BingSearch*",
-    "*Bing*",
-    "*Microsoft.Clipchamp*",
-    "*Clipchamp*",
-    "*Copilot*",
-    "*Microsoft.Copilot*",
-    "*Windows.Copilot*",
-    "*Microsoft.DevHome*",
-    "*Windows.DevHome*"
+    "*Pinterest*"
 )
 
-$keepApps = @(
-    "*XboxGameOverlay*",
-    "*XboxGamingOverlay*",
-    "*MicrosoftTeams*",
-    "*Office*",
-    "*MicrosoftOfficeHub*",
-    "*Outlook*",
-    "*OneNote*"
-)
+foreach ($pattern in $apps) {
 
-foreach ($app in $apps) {
+    Write-Host ""
+    Write-Host "Searching for $pattern..." -ForegroundColor Cyan
 
-    # skip anything in keep list
-    $skip = $false
-    foreach ($keep in $keepApps) {
-        if ($app -like $keep) {
-            $skip = $true
-            break
+    # Remove installed packages
+    Get-AppxPackage -AllUsers -Name $pattern | ForEach-Object {
+
+        try {
+            Write-Host "Removing $($_.Name)..."
+
+            Remove-AppxPackage `
+                -Package $_.PackageFullName `
+                -AllUsers `
+                -ErrorAction Stop
+
+            Write-Host "✓ Removed $($_.Name)" -ForegroundColor Green
+        }
+        catch {
+            Write-Host "✗ Failed: $($_.Name)" -ForegroundColor Yellow
         }
     }
 
-    if ($skip) {
-        Write-Host "Skipping $app (protected)"
-        continue
-    }
-
-    Write-Host "Removing $app..."
-
-    Get-AppxPackage -AllUsers $app | Remove-AppxPackage -ErrorAction SilentlyContinue
-
+    # Remove provisioned packages (new users)
     Get-AppxProvisionedPackage -Online |
-        Where-Object DisplayName -like $app |
-        Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue
+        Where-Object DisplayName -like $pattern |
+        ForEach-Object {
+
+            try {
+                Remove-AppxProvisionedPackage `
+                    -Online `
+                    -PackageName $_.PackageName `
+                    -ErrorAction Stop | Out-Null
+
+                Write-Host "✓ Removed provisioned package $($_.DisplayName)" -ForegroundColor Green
+            }
+            catch {
+                Write-Host "✗ Failed provisioned package $($_.DisplayName)" -ForegroundColor Yellow
+            }
+        }
 }
 
 Write-Host ""
-Write-Host "Done! Restart recommended."
+Write-Host "======================================" -ForegroundColor Cyan
+Write-Host "Debloat completed!" -ForegroundColor Green
+Write-Host "Restart your PC to apply all changes." -ForegroundColor Cyan
+Write-Host "======================================" -ForegroundColor Cyan
